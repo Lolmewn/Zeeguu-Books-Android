@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ZeeguuBooks.iml" filepath="$PROJECT_DIR$/.idea/ZeeguuBooks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/zeeguu-android-library/zeeguu-android-library.iml" filepath="$PROJECT_DIR$/libraries/zeeguu-android-library/zeeguu-android-library.iml" />
     </modules>
   </component>
 </project>
