@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "zeeguu-books",
+    "project_number": "610875520979",
+    "name": "Zeeguu Books"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610875520979:android:d594d076325b9762",
+        "client_id": "android:lolmewn.nl.zeeguubooks",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "lolmewn.nl.zeeguubooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610875520979-kp664plhgl9g6fdrc913gobhh5rkn6uo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lolmewn.nl.zeeguubooks",
+            "certificate_hash": "F31F956CE202C6BF830B7DB39D9349A8BF404280"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

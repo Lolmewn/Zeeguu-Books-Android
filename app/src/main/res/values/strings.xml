@@ -13,5 +13,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">Log in to Zeeguu</string>
+    <string name="title_activity_main">Zeeguu Books Login</string>
+    <string name="title_activity_google_login">Sign in to Google</string>
 </resources>

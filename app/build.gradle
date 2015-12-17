@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
+    apply plugin: 'com.google.gms.google-services'
     defaultConfig {
         applicationId "nl.lolmewn.zeeguubooks"
         minSdkVersion 14
@@ -23,6 +23,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:palette-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
+    compile 'com.google.apis:google-api-services-books:v1-rev76-1.21.0'
     compile('com.mikepenz:materialdrawer:4.3.1@aar') {transitive = true}
     compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
