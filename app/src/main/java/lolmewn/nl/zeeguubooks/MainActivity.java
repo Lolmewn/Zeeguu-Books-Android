@@ -1,5 +1,6 @@
 package lolmewn.nl.zeeguubooks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements ZeeguuConnectionM
             registerLoginViewButtons();
         } else {
             // TODO check if Google is already logged in, too
-            setContentView(R.layout.activity_google_login);
+            Intent googleLoginIntent = new Intent(this, GoogleLogin.class);
+            startActivity(googleLoginIntent);
         }
 
 

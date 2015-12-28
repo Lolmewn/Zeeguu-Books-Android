@@ -15,4 +15,5 @@
     </string>
     <string name="title_activity_main">Zeeguu Books Login</string>
     <string name="title_activity_google_login">Sign in to Google</string>
+    <string name="loading">Loading...</string>
 </resources>
