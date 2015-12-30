@@ -65,7 +65,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
         Log.d(TAG, "onCreate()");
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -122,6 +122,10 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d(TAG, acct.getDisplayName() + " logged in (" + acct.getId() + ")");
+
+            Intent bookshelfMenu = new Intent(this, BookshelfMenu.class);
+            bookshelfMenu.putExtra("google_account", acct);
+            startActivity(bookshelfMenu);
         } else {
             Log.d(TAG, "Signed out");
             // Signed out, show unauthenticated UI.
@@ -136,7 +140,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        showErrorDialogAndQuit("The app cannot communicate with the Google API and can therefore not load your books." +
+        showErrorDialogAndQuit("The app cannot communicate with the Google API and can therefore not load your books.\n" +
                 "Please check your internet connection or try again later.");
     }
 

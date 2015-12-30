@@ -16,4 +16,13 @@
     <string name="title_activity_main">Zeeguu Books Login</string>
     <string name="title_activity_google_login">Sign in to Google</string>
     <string name="loading">Loading...</string>
+    <string name="title_activity_bookshelf_menu">BookshelfMenu</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="profilePicture">User profile picture</string>
+    <string name="username">Username here</string>
+    <string name="userEmail">info@example.com</string>
 </resources>
