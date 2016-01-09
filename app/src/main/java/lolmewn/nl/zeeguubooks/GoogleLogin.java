@@ -34,6 +34,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,7 +44,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.plus.Plus;
+import com.google.api.services.books.Books;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +59,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
+public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, View.OnClickListener{
 
     private static final String TAG = "GoogleLoginActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -65,13 +71,21 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_login);
         Log.d(TAG, "onCreate()");
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestScopes(new Scope("https://www.googleapis.com/auth/books"))
+                .build();
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
+        mGoogleApiClient.connect();
+
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+
     }
 
     @Override
@@ -96,7 +110,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
                 public void onResult(GoogleSignInResult googleSignInResult) {
                     hideProgressDialog();
                     handleSignInResult(googleSignInResult);
-                    if(!googleSignInResult.isSuccess()){
+                    if (!googleSignInResult.isSuccess()) {
                         GoogleLogin.this.signIn();
                     }
                 }
@@ -121,8 +135,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.d(TAG, acct.getDisplayName() + " logged in (" + acct.getId() + ")");
-
+            Log.d(TAG, acct.getDisplayName() + " (" + acct.getEmail() + ") logged in (" + acct.getId() + ")");
             Intent bookshelfMenu = new Intent(this, BookshelfMenu.class);
             bookshelfMenu.putExtra("google_account", acct);
             startActivity(bookshelfMenu);
@@ -140,6 +153,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection to GPlay services failed");
         showErrorDialogAndQuit("The app cannot communicate with the Google API and can therefore not load your books.\n" +
                 "Please check your internet connection or try again later.");
     }
@@ -196,6 +210,24 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
                 aDialog.show();
             }
         });
+    }
+
+
+
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        Log.i(TAG, "Connected to GPlay services");
+        // Connected to Google Play services!
+        // The good stuff goes here.
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.i(TAG, "Connection to GPlay services suspended: " + cause);
+        // The connection has been interrupted.
+        // Disable any UI components that depend on Google APIs
+        // until onConnected() is called.
     }
 }
 

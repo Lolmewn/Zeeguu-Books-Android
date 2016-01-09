@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements ZeeguuConnectionM
             setContentView(R.layout.activity_login);
             registerLoginViewButtons();
         } else {
-            // TODO check if Google is already logged in, too
             Intent googleLoginIntent = new Intent(this, GoogleLogin.class);
             startActivity(googleLoginIntent);
         }
@@ -97,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements ZeeguuConnectionM
 
     @Override
     public void onZeeguuLoginSuccessful() {
-        setContentView(R.layout.activity_google_login);
+        Intent googleLoginIntent = new Intent(this, GoogleLogin.class);
+        startActivity(googleLoginIntent);
     }
 
     @Override

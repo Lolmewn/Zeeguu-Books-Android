@@ -1,8 +1,6 @@
 package lolmewn.nl.zeeguubooks;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,11 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.services.books.model.Bookshelf;
 
+import java.util.List;
+
+import lolmewn.nl.zeeguubooks.adapters.BookshelvesListAdapter;
+import lolmewn.nl.zeeguubooks.tasks.GetMyBookshelves;
+import lolmewn.nl.zeeguubooks.tasks.TaskResult;
 import lolmewn.nl.zeeguubooks.tools.DownloadImageTask;
 
 public class BookshelfMenu extends AppCompatActivity
@@ -28,9 +34,9 @@ public class BookshelfMenu extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "Launching BookshelfMenu");
         super.onCreate(savedInstanceState);
-        acct = (GoogleSignInAccount) this.getIntent().getExtras().getParcelable("google_account");
-
+        acct = this.getIntent().getExtras().getParcelable("google_account");
         setContentView(R.layout.activity_bookshelf_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,18 +47,42 @@ public class BookshelfMenu extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // Set icon, name and email in side-navbar
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View header = navigationView.getHeaderView(0);
         ImageView profilePicture = (ImageView) header.findViewById(R.id.profilePicture);
         new DownloadImageTask(profilePicture).execute(acct.getPhotoUrl().toString());
-
-
         TextView username = (TextView) header.findViewById(R.id.user_name);
         username.setText(acct.getDisplayName());
         TextView email = (TextView) header.findViewById(R.id.user_email);
         email.setText(acct.getEmail());
+        navigationView.setCheckedItem(R.id.nav_main_menu);
+
+        loadBookshelves();
+    }
+
+    private void loadBookshelves() {
+        Log.d(TAG, "Loading bookshelves...");
+        new GetMyBookshelves(this, acct.getEmail()) {
+            @Override
+            public void handleResult(TaskResult<List<Bookshelf>> result) {
+                Log.d(TAG, "Results are in!");
+                if (result.isError()) {
+                    result.getError().printStackTrace();
+                } else {
+                    Log.d(TAG, "We have " + result.getResult().size() + " bookshelves");
+                    // Show dem books!
+                    List<Bookshelf> shelves = result.getResult();
+                    handleShelves(shelves);
+                }
+            }
+        }.execute();
+    }
+
+    private void handleShelves(List<Bookshelf> shelves) {
+        ListView list = (ListView) findViewById(R.id.books_list);
+        list.setAdapter(new BookshelvesListAdapter(this, R.layout.bookshelf, shelves, acct.getEmail()));
     }
 
     @Override
@@ -87,23 +117,14 @@ public class BookshelfMenu extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (id == R.id.nav_main_menu) {
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_library) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
         }
 

@@ -20,12 +20,12 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true">
 
-        <fragment android:name="lolmewn.nl.zeeguubooks.BookshelfFragment"
-            android:id="@+id/bookshelf_fragment"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            tools:layout="@layout/fragment_bookshelf_list" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/books_list">
+
+        </ListView>
     </LinearLayout>
 
 </RelativeLayout>

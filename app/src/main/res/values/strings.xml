@@ -15,7 +15,7 @@
     </string>
     <string name="title_activity_main">Zeeguu Books Login</string>
     <string name="title_activity_google_login">Sign in to Google</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="title_activity_bookshelf_menu">BookshelfMenu</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -25,4 +25,8 @@
     <string name="profilePicture">User profile picture</string>
     <string name="username">Username here</string>
     <string name="userEmail">info@example.com</string>
+
+    <string name="server_client_id">610875520979-kp664plhgl9g6fdrc913gobhh5rkn6uo.apps.googleusercontent.com</string>
+    <string name="api_key">AIzaSyCwyGdojFMDnGyz4yH3AYcdUwDp8VW8eDA</string>
+    <string name="books_scope">oauth2:https://www.googleapis.com/auth/books</string>
 </resources>
