@@ -24,7 +24,12 @@ public class MainActivity extends AppCompatActivity implements ZeeguuConnectionM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable ex) {
+                ex.printStackTrace();
+            }
+        });
         account = new ZeeguuBooksAccount(this);
         if(!account.isUserLoggedIn()){
             setContentView(R.layout.activity_login);

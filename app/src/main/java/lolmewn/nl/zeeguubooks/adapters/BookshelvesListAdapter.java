@@ -15,6 +15,7 @@ import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Volume;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 import lolmewn.nl.zeeguubooks.R;
@@ -40,13 +41,13 @@ public class BookshelvesListAdapter extends ArrayAdapter<Bookshelf> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d(TAG, "Adding View for item at pos=" + position);
         View view = convertView;
         if(convertView == null){
             view = inflater.inflate(R.layout.bookshelf, null);
         }
 
         Bookshelf shelf = getItem(position);
+        Log.d(TAG, "Adding View for item at pos=" + position + "; name=" + shelf.getTitle() + ";volumes=" + shelf.getVolumeCount());
 
         TextView title = (TextView)view.findViewById(R.id.shelf_title);
         TextView privacy = (TextView)view.findViewById(R.id.shelf_privacy);
