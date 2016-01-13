@@ -1,6 +1,8 @@
 package lolmewn.nl.zeeguubooks;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.services.books.model.Bookshelf;
@@ -35,6 +38,7 @@ import lolmewn.nl.zeeguubooks.tasks.GetMyBooks;
 import lolmewn.nl.zeeguubooks.tasks.GetMyBookshelves;
 import lolmewn.nl.zeeguubooks.tasks.TaskResult;
 import lolmewn.nl.zeeguubooks.tools.DownloadImageTask;
+import lolmewn.nl.zeeguubooks.tools.TokenGetter;
 
 public class BookshelfMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -149,6 +153,27 @@ public class BookshelfMenu extends AppCompatActivity
 
     private void openBook(Volume book) {
         Log.i(TAG, "Opening book " + book.getVolumeInfo().getTitle());
+        Intent intent = new Intent(this, BookActivity.class);
+        intent.putExtra("book_url", book.getAccessInfo().getWebReaderLink() + "&key=" + getString(R.string.api_key));
+        intent.putExtra("epub_url", book.getAccessInfo().getEpub().getDownloadLink() + "&key=" + getString(R.string.api_key));
+        intent.putExtra("book_name", book.getVolumeInfo().getTitle());
+        intent.putExtra("book_id", book.getId());
+        new AsyncTask<Intent, Void, Intent>(){
+            @Override
+            protected Intent doInBackground(Intent... params) {
+                try {
+                    params[0].putExtra("token", TokenGetter.getOAuth2Token(BookshelfMenu.this, acct.getEmail(), getString(R.string.books_scope)));
+                } catch (GoogleAuthException | IOException e) {
+                    e.printStackTrace();
+                }
+                return params[0];
+            }
+
+            @Override
+            protected void onPostExecute(Intent intent) {
+                startActivity(intent);
+            }
+        }.execute(intent);
     }
 
     @Override

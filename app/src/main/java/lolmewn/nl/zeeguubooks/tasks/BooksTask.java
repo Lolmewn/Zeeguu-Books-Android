@@ -13,6 +13,7 @@ import com.google.api.services.books.BooksRequestInitializer;
 import java.io.IOException;
 
 import lolmewn.nl.zeeguubooks.R;
+import lolmewn.nl.zeeguubooks.tools.TokenGetter;
 
 public abstract class BooksTask<T> extends AsyncTask<Void, Void, TaskResult<T>>{
 
@@ -52,7 +53,7 @@ public abstract class BooksTask<T> extends AsyncTask<Void, Void, TaskResult<T>>{
      * GoogleAuthException that may occur.
      */
     protected String getOAuth2Token() throws IOException, GoogleAuthException {
-        return GoogleAuthUtil.getToken(mActivity, mEmail, mScope);
+        return TokenGetter.getOAuth2Token(mActivity, mEmail, mScope);
     }
 
 }

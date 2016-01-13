@@ -30,4 +30,8 @@
     <string name="api_key">AIzaSyCwyGdojFMDnGyz4yH3AYcdUwDp8VW8eDA</string>
     <string name="books_scope">oauth2:https://www.googleapis.com/auth/books</string>
     <string name="no_books">No books available in this bookshelf!</string>
+
+    <string name="title_activity_book">BookActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
