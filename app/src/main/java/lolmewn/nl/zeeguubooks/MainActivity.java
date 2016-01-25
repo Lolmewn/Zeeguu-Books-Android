@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements ZeeguuConnectionM
             }
         });
         account = new ZeeguuBooksAccount(this);
+        QuickFix.setZeeguuAccount(account);
         if(!account.isUserLoggedIn()){
             setContentView(R.layout.activity_login);
             registerLoginViewButtons();

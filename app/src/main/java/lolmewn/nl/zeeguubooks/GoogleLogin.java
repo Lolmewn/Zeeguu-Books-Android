@@ -136,6 +136,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d(TAG, acct.getDisplayName() + " (" + acct.getEmail() + ") logged in (" + acct.getId() + ")");
+            QuickFix.setGoogleAccount(acct);
             Intent bookshelfMenu = new Intent(this, BookshelfMenu.class);
             bookshelfMenu.putExtra("google_account", acct);
             startActivity(bookshelfMenu);

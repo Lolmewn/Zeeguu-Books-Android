@@ -37,10 +37,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".BookActivity"
+            android:name=".ChapterViewer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_book"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".BookReader"></activity>
     </application>
 
 </manifest>

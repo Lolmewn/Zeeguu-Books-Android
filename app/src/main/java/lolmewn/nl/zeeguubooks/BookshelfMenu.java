@@ -153,11 +153,8 @@ public class BookshelfMenu extends AppCompatActivity
 
     private void openBook(Volume book) {
         Log.i(TAG, "Opening book " + book.getVolumeInfo().getTitle());
-        Intent intent = new Intent(this, BookActivity.class);
-        intent.putExtra("book_url", book.getAccessInfo().getWebReaderLink() + "&key=" + getString(R.string.api_key));
+        Intent intent = new Intent(this, BookReader.class);
         intent.putExtra("epub_url", book.getAccessInfo().getEpub().getDownloadLink() + "&key=" + getString(R.string.api_key));
-        intent.putExtra("book_name", book.getVolumeInfo().getTitle());
-        intent.putExtra("book_id", book.getId());
         new AsyncTask<Intent, Void, Intent>(){
             @Override
             protected Intent doInBackground(Intent... params) {
