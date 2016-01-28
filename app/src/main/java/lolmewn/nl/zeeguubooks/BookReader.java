@@ -1,9 +1,9 @@
 package lolmewn.nl.zeeguubooks;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,16 +11,19 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.unibe.zeeguulibrary.Core.ZeeguuAccount;
 import ch.unibe.zeeguulibrary.Core.ZeeguuConnectionManager;
+import ch.unibe.zeeguulibrary.Dialogs.ZeeguuLoginDialog;
 import ch.unibe.zeeguulibrary.WebView.ZeeguuWebViewFragment;
 import ch.unibe.zeeguulibrary.WebView.ZeeguuWebViewInterface;
 import lolmewn.nl.zeeguubooks.tasks.GetBook;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Spine;
+import nl.siegmann.epublib.domain.SpineReference;
 
 public class BookReader extends AppCompatActivity implements ZeeguuWebViewFragment.ZeeguuWebViewCallbacks, ZeeguuWebViewInterface.ZeeguuWebViewInterfaceCallbacks{
 
@@ -32,12 +35,13 @@ public class BookReader extends AppCompatActivity implements ZeeguuWebViewFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_reader);
+        StateManager.setReader(this);
 
         this.pager = (ViewPager)findViewById(R.id.pager);
-        this.adapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        this.adapter = new ScreenSlidePagerAdapter(getFragmentManager());
         this.pager.setAdapter(adapter);
 
-        final String token = this.getIntent().getExtras().getString("token");
+        final String authorization_token = this.getIntent().getExtras().getString("authorization_token");
         final String epubURL = this.getIntent().getExtras().getString("epub_url");
         new GetBook() {
             @Override
@@ -45,70 +49,55 @@ public class BookReader extends AppCompatActivity implements ZeeguuWebViewFragme
                 Log.d(TAG, "EPUB loading finished: Title=" + book.getTitle());
                 displayBook(book);
             }
-        }.execute(epubURL, token);
+        }.execute(epubURL, authorization_token);
     }
 
     private void displayBook(Book book) {
         Spine spine = book.getSpine();
-        for (int i = 0; i < book.getContents().size(); i++) {
+        for (SpineReference ref : spine.getSpineReferences()) {
             StringBuilder sb = new StringBuilder();
-            Resource res = spine.getResource(i);
+            Resource res = ref.getResource();
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(res.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     sb.append(line).append("\n");
                 }
-                this.adapter.updatePage(i, sb.toString());
+                reader.close();
+                this.adapter.updatePage(sb.toString());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
         pager.getAdapter().notifyDataSetChanged();
-
-    /*
-        String varMySheet = "var mySheet = document.styleSheets[0];";
-
-        String addCSSRule = "function addCSSRule(selector, newRule) {"
-                + "ruleIndex = mySheet.cssRules.length;"
-                + "mySheet.insertRule(selector + '{' + newRule + ';}', ruleIndex);"
-
-                + "}";
-
-        String insertRule1 = "addCSSRule('html', 'padding: 0px; height: "
-                + (getWebView().getMeasuredHeight() / getContext().getResources().getDisplayMetrics().density)
-                + "px; -webkit-column-gap: 0px; -webkit-column-width: "
-                + getWebView().getMeasuredWidth() + "px;')";
-
-
-        getWebView().loadUrl("javascript:" + varMySheet);
-        getWebView().loadUrl("javascript:" + addCSSRule);
-        getWebView().loadUrl("javascript:" + insertRule1);*/
     }
 
     @Override
     public ZeeguuConnectionManager getZeeguuConnectionManager() {
-        return QuickFix.getZeeguuAccount();
+        return StateManager.getZeeguuAccount();
     }
 
     @Override
     public ZeeguuWebViewFragment getWebViewFragment() {
-        return null;
+        return (ZeeguuWebViewFragment) adapter.instantiateItem(pager, pager.getCurrentItem());
     }
 
     @Override
     public ZeeguuAccount getZeeguuAccount() {
-        return QuickFix.getZeeguuAccount().getAccount();
+        return StateManager.getZeeguuAccount().getAccount();
     }
 
     @Override
     public void showZeeguuLoginDialog(String title, String email) {
-        Log.e("BookReader", "A Zeeguu login dialog is requested - please no");
+        ZeeguuLoginDialog loginDialog = new ZeeguuLoginDialog();
+        loginDialog.setMessage(title);
+        loginDialog.setEmail(email);
+        loginDialog.show(getFragmentManager(), "zeeguu_login");
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter{
 
-        private final HashMap<Integer, String> chapters = new HashMap<>();
+        private final List<String> chapters = new ArrayList<>();
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -124,8 +113,9 @@ public class BookReader extends AppCompatActivity implements ZeeguuWebViewFragme
             return chapters.size();
         }
 
-        public void updatePage(int idx, String html){
-            chapters.put(idx, html);
+        public void updatePage(String html){
+            chapters.add(html);
         }
+
     }
 }

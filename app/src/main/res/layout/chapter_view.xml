@@ -1,19 +1,16 @@
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context=".ChapterViewer">
+    android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/panel_content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <WebView
-            android:id="@+id/webview_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/webview_content"
+            />
 
         <ProgressBar
             android:id="@+id/webview_progress_bar"
@@ -52,23 +49,10 @@
                 android:src="@drawable/ic_action_bookmark"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/bookmark_button_name" />
 
         </RelativeLayout>
+    </RelativeLayout>
 
-    </FrameLayout>
-</FrameLayout>
--->
-
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webview_content"
-        ></WebView>
 </ScrollView>

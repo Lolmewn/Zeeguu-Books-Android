@@ -1,8 +1,5 @@
 package lolmewn.nl.zeeguubooks.tasks;
 
-/**
- * Created by Lolmewn on 07/01/2016.
- */
 public class TaskResult<T> {
 
     private T result;

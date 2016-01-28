@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory
+    android:title="@string/settings_google_title">
+    <Preference
+        android:key="pref_google_account"
+        android:title="@string/settings_google_account_title"
+        android:summary="@string/settings_google_account_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

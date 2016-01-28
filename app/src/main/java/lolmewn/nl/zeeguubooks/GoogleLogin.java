@@ -1,41 +1,16 @@
 package lolmewn.nl.zeeguubooks;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -45,16 +20,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.plus.Plus;
-import com.google.api.services.books.Books;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import lolmewn.nl.zeeguubooks.R;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -80,6 +45,8 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        StateManager.setGoogleApiClient(mGoogleApiClient);
 
         mGoogleApiClient.connect();
 
@@ -136,7 +103,7 @@ public class GoogleLogin extends AppCompatActivity implements GoogleApiClient.On
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d(TAG, acct.getDisplayName() + " (" + acct.getEmail() + ") logged in (" + acct.getId() + ")");
-            QuickFix.setGoogleAccount(acct);
+            StateManager.setGoogleAccount(acct);
             Intent bookshelfMenu = new Intent(this, BookshelfMenu.class);
             bookshelfMenu.putExtra("google_account", acct);
             startActivity(bookshelfMenu);

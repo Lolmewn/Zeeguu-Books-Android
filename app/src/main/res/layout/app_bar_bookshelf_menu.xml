@@ -34,12 +34,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="lolmewn.nl.zeeguubooks.BookshelfMenu"
         android:layout_below="@+id/abl"
-        tools:showIn="@layout/app_bar_bookshelf_menu">
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/books_list">
-
-    </ListView>
-</RelativeLayout>
+        tools:showIn="@layout/app_bar_bookshelf_menu"
+        android:id="@+id/menu_frame_layout">
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

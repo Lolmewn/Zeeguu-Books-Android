@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="@string/pref_google"
+        android:title="@string/settings_google_title"
+        android:icon="@drawable/common_google_signin_btn_icon_dark_normal" />
+    <Preference
+        android:key="@string/pref_zeeguu"
+        android:title="@string/settings_zeguu_title"
+        android:icon="@drawable/ic_action_zeeguu" />
+</PreferenceScreen>

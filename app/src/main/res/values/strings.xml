@@ -32,6 +32,48 @@
     <string name="no_books">No books available in this bookshelf!</string>
 
     <string name="title_activity_book">BookActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="bookmark_button_name">bookmark_button</string>
+
+
+
+
+    <string name="tag_main_settings">mainSettings</string>
+    <string name="tag_zeeguu_settings">zeeguuSettings</string>
+    <string name="tag_google_settings">googleSettings</string>
+
+    <string name="pref_zeeguu">pref_zeeguu</string>
+    <string name="pref_google">pref_google</string>
+
+    <string name="dialog_google_logout">Are you sure you want to log out? You will have to log in again to use the app.</string>
+    <string name="dialog_google_logout_confirm">Google Logout</string>
+
+    <string name="settings_zeguu_title">Zeeguu</string>
+    <string name="settings_zeguu_account_title">Account</string>
+    <string name="settings_zeguu_account_summary">Not logged in</string>
+    <string name="settings_zeguu_account_login">Logged in as</string>
+    <string name="settings_zeguu_language_native_title">Native Language</string>
+    <string name="settings_zeguu_language_native_summary">Your native language</string>
+    <string name="settings_zeguu_language_learning_title">Learning Language</string>
+    <string name="settings_zeguu_language_learning_summary">The language you are currently learning</string>
+    <string name="settings_zeguu_highlight_title">Highlight words</string>
+    <string name="settings_zeguu_highlight_summary">Highlight the words you are currently learning in the text.</string>
+
+    <string name="settings_google_title">Google</string>
+    <string name="settings_google_account_title">Account</string>
+    <string name="settings_google_account_summary">Not logged in</string>
+    <string name="settings_google_account_login">Logged in as %s</string>
+
+    <string-array name="zeeguu_languages_entries">
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Italian</item>
+    </string-array>
+
+    <string-array name="zeeguu_language_entry_values">
+        <item>en</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>it</item>
+    </string-array>
 </resources>
