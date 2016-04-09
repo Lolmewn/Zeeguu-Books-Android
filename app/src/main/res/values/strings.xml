@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">Zeeguu Books</string>
 
     <!-- Strings related to login -->
@@ -27,7 +27,7 @@
     <string name="userEmail">info@example.com</string>
 
     <string name="server_client_id">610875520979-kp664plhgl9g6fdrc913gobhh5rkn6uo.apps.googleusercontent.com</string>
-    <string name="api_key">AIzaSyCwyGdojFMDnGyz4yH3AYcdUwDp8VW8eDA</string>
+    <string name="api_key"></string>
     <string name="books_scope">oauth2:https://www.googleapis.com/auth/books</string>
     <string name="no_books">No books available in this bookshelf!</string>
 
